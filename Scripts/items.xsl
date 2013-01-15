@@ -17,7 +17,7 @@
 								<li>
 									<input type="checkbox" class="listCheck" id="{$ruleName}" tabindex="1" onchange='handleChange(this);' />
 									<label for="{$ruleName}"><xsl:copy-of select="$ruleName" /></label>
-									<em class="info" onclick="openDetails()" >i</em>
+									<em class="info" onClick="openDetails(event); return false;" >i</em>
 										<!--  Sub list holding links and their urls  -->
 										<ul>
 											<xsl:for-each select="link">
@@ -31,13 +31,12 @@
 													<a href="{$linkUrl}"><xsl:value-of select="." /></a>
 												</li>
 											</xsl:for-each>
-										</ul>										
+										</ul>
 								</li>	
 							</xsl:for-each>
 						</ul>						
 					</section>
-				</xsl:for-each>
-				
+				</xsl:for-each>				
 			</body>
 		</html>
 	</xsl:template>

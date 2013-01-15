@@ -74,8 +74,8 @@ function clearAll() {
 function openDetails(e){
 	var details = document.getElementsByTagName('em');
 	
-	if (!e) e = window.event;
-	var detail = (e.target || e.srcElement);                
+	e = e || window.event;
+	var detail = e.target || e.srcElement;                
 	var ul = (detail.nextElementSibling || detail.nextSibling);
 
 	if (ul.style.maxHeight !== '100px')
@@ -88,5 +88,5 @@ function openDetails(e){
 			var d = (details[i].nextElementSibling || details[i].nextSibling);
 			d.style.maxHeight = "0";
 		}
-	}
+	}	
 }
