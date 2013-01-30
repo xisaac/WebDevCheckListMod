@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<checklist>
+  <category name="Best practices">
+    <rule name="Remove 'www' subdomain">
+      <link url="http://no-www.org/verify.php">no-www.org</link>
+      <link url="http://keyvan.io/remove-www-prefix-from-urls-with-url-rewrite-module-for-iis-7-0">Remove </link>
+    </rule>
+    <rule name="Check website in all browsers">
+      <link url="http://blogs.msdn.com/b/synergist/archive/2012/04/23/making-a-great-snapped-view-for-your-web-site-on-ie10-on-windows-8.aspx">Win8 snapped sites</link>
+      <link url="http://browsershots.org/">BrowserShots.org</link>
+      <link url="https://browserling.com/">Browserling.com</link>
+    </rule>
+    <rule name="Spell-check"/>
+    <rule name="Fix broken links">
+      <link url="http://validator.w3.org/checklink">W3C link checker</link>
+      <link url="http://iwebtool.com/broken_link_checker">iWebTool Broken Link Checker</link>
+    </rule>
+  </category>
+</checklist>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<checklist>
+<checklist id="Base">
   <category name="Best practices">
     <rule name="Fix broken links">
       <link url="http://validator.w3.org/checklink">W3C link checker</link>
@@ -14,7 +14,7 @@
     <rule name="Remove 'www' subdomain">
       <link url="http://no-www.org/verify.php">no-www.org</link>
       <link url="http://keyvan.io/remove-www-prefix-from-urls-with-url-rewrite-module-for-iis-7-0">Remove "www" in web.config</link>
-    </rule>    
+    </rule>
   </category>
 
   <category name="Mobile">
@@ -187,6 +187,5 @@
       <link url="http://certlogik.com/ssl-checker/">Online SSL checker</link>
     </rule>
   </category>
-
-
+  
 </checklist>

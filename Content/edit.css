@@ -1,0 +1,36 @@
+#pagelayout {
+	width: 90%;
+	border: 1px solid black;
+	margin-left:auto; 
+    margin-right:auto;
+}
+
+#pagelayout tr td {
+	width: 30%;
+	vertical-align: top;
+}
+
+h3 {
+	text-decoration:underline;
+	font-style: italic;
+}
+
+#urlTxt{
+	width:80%;
+}
+#urlTextTxt{
+	width: 40%;
+}
+
+
+#btnDispose{
+	background-color: red;	
+}
+
+#linkFormEdit div{
+	border: 1px solid black;
+}
+
+#commitbtn{
+	float: right;
+}
