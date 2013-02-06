@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-us">
 	<head>
-		<title>Web Developer Checklist</title>
-		<meta charset="utf-8" />
+		<?php header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0'); ?>
+		<meta charset="utf-8" />		
 		<meta name="keywords" content="checklist, best practices, web development, performance, usability, mobile, website" />
 		<meta name="description" content="The ultimate checklist for all serious web developers building modern websites" />
 		<meta name="author" content="Sayed Hashimi @sayedihashimi, Mads Kristensen @mkristensen" />
@@ -14,15 +14,11 @@
 		
 		<script src="Scripts/modernizr-2.6.2.js"></script>
 		<script src="Scripts/script.js"></script>
-		<script src="scripts/script.min.js" async="async"></script>
+		<script src="scripts/script.min.js" async="async"></script>		
+		<?php include('scripts/sort.php'); ?>
 	</head>
 	
-	<body onload="displayResult()">	
-	    <header itemscope itemtype="http://schema.org/WebApplication">
-			<h1 itemprop="name">Web Developer Checklist</h1>
-		</header>
-		<aside><a href="https://github.com/ligershark/webdevchecklist.com"><span class="ghFork"></span></a></aside>
-		
+	<body onload="displayResult()">		
 		<?php include('snippets/menubar.php'); ?>
 		
 		<div id="main">
@@ -50,4 +46,8 @@
 		</script>
 
 	</body>
+	<HEAD>
+		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+		<META HTTP-EQUIV="Expires" CONTENT="-1">
+	</HEAD>
 </html>

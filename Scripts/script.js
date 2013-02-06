@@ -18,7 +18,6 @@ return xhttp.responseXML;
 Creates the HTML page, using the 'loadXMLDoc(dname)' method to load the xml and xslt file.
 This code is executed using the "body" tag's "onload" method.
 */
-
 function displayResult()
 {
 xml=loadXMLDoc("App_Data/items.xml");
@@ -39,6 +38,8 @@ else if (document.implementation && document.implementation.createDocument)
   }
   handleChange(this);
 }
+
+
 /*
 Attached to the rule-checkboxes' "onchange" property within the XSLT file.
 Updates the progress bar with the percentage completion.

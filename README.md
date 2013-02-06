@@ -1,4 +1,0 @@
-WebDevCheckListMod
-==================
-
-WebDevCheckList project modification.

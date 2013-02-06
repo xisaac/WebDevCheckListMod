@@ -4,6 +4,9 @@ var catNameText = document.getElementById('categoryNameTxt');
 var cat = document.getElementById('categories');
 var newCatRad = document.getElementById('CatTextRadBtn');
 
+var deleteCat = document.getElementById('deleteCategory');
+var deleteRule = document.getElementById('deleteRule');
+
 var ruleListRadBtn = document.getElementById('editRuleRadBtn');
 var rule = document.getElementById('rules');
 var ruleTextValue = document.getElementById('ruleNameTxt');
@@ -33,6 +36,7 @@ function updateCategory(){
 		newOption.innerHTML = categoryName[i].getAttribute('name');
 		cat.appendChild(newOption);
 	}
+	deleteCat.disabled=false;
 	updateRule();
 	ruleListRadBtn.checked=true;
 }
@@ -43,7 +47,7 @@ function updateRule(){
 	var ruleName=xml.getElementsByTagName("rule");
 	var selectedCat = cat.options[cat.selectedIndex].text;
 	rule.disabled=false;
-	ruleTextValue.disabled=true;
+	ruleTextValue.disabled=true;	
 	
 	while ( rule.firstChild ) rule.removeChild( rule.firstChild );	
 	var j=0;
@@ -63,6 +67,7 @@ function updateRule(){
 			rule.setAttribute("style","background-color: #E24343;");
 		}					
 	} else {
+		deleteRule.disabled=false;
 		rule.setAttribute("style","background-color: none;");
 		updateLinks();
 	}
@@ -91,6 +96,7 @@ function updateLinks(){
 function selectNewCategory(){
 	catNameText.disabled=false;
 	cat.disabled=true;
+	deleteCat.disabled=true;
 	while ( cat.firstChild ) cat.removeChild( cat.firstChild );
 	
 	var newOption = document.createElement('option');
@@ -105,6 +111,7 @@ function selectNewrule(){
 	ruleTextValue.disabled=false;	
 	ruleTextRadBtn.checked=true;
 	rule.disabled=true;
+	deleteRule.disabled=true;
 	while(linkform.firstChild) {	linkform.removeChild(linkform.firstChild);	}
 }
 
@@ -196,6 +203,21 @@ function commitValidation(){
 	
 	messageContainer.innerHTML = messageValue;
 	message.appendChild(messageContainer);
-	
-	if ( validationReady == true ) { javaFunction(catValue, ruleValue, linkTextArr, linkUrlArr); }	
+	var action = 'Commit';
+	if ( validationReady == true ) { javaFunction(catValue, ruleValue, linkTextArr, linkUrlArr, action); }	
+}
+
+function removeCategory(){
+	var action = "removeCat";
+	var ruleValue, linkTextArr, linkUrlArr;
+	var selectedCat = cat.options[cat.selectedIndex].text;
+	javaFunction(selectedCat, ruleValue, linkTextArr, linkUrlArr, action);
+}
+
+function removeRule(){
+	var action = "removeRule";
+	var linkTextArr, linkUrlArr;
+	var catValue = cat.options[cat.selectedIndex].text;
+	var selectedRule = rule.options[rule.selectedIndex].text;
+	javaFunction(catValue, selectedRule, linkTextArr, linkUrlArr, action);
 }

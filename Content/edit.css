@@ -22,7 +22,6 @@ h3 {
 	width: 40%;
 }
 
-
 #btnDispose{
 	background-color: red;	
 }
@@ -33,4 +32,12 @@ h3 {
 
 #commitbtn{
 	float: right;
+}
+
+#deleteCategory{
+	margin: 7% 0% 0% 5%;
+}
+
+#deleteRule{
+	margin: 7% 0% 0% 5%;
 }
