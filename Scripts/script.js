@@ -54,7 +54,7 @@ function handleChange(cb) {
 		}
 	}
 	percentage = (count/totalCount.length) * 100;
-	display(percentage + "%");
+	display(percentage.toPrecision(3) + "%");
 	checkProgress.value = percentage;
 }
 function display(msg) {

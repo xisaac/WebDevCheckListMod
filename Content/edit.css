@@ -1,13 +1,26 @@
 #pagelayout {
 	width: 90%;
 	border: 1px solid black;
-	margin-left:auto; 
+	-moz-border-radius: 15px; /* mozilla */
+	border-radius: 15px; /* css 3 */
+	margin-left:auto;
     margin-right:auto;
 }
 
 #pagelayout tr td {
 	width: 30%;
 	vertical-align: top;
+}
+
+#pagelayout [type="text"]{
+	background-color: #5f8db6;
+ 	-moz-border-radius: 15px; /* mozilla */
+	border-radius: 15px; /* css 3 */
+    border:solid 1px black; 
+    padding:5px;
+	vertical-align: middle;
+	height: 8px;
+	font-weight: bold;
 }
 
 h3 {
@@ -40,4 +53,8 @@ h3 {
 
 #deleteRule{
 	margin: 7% 0% 0% 5%;
+}
+
+#linkForm div input{
+	width: 80%;
 }

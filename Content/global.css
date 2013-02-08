@@ -1,3 +1,8 @@
+body{
+	margin: 0;
+    padding: 0;
+}
+
 #mainmenu{ background-color:#5d7c3b; float: left; list-style:none; margin:0; padding:0; width: 100%; }
 #mainmenu li{	float: left; margin: 0 0 0 10px;}
 

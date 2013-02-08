@@ -13,41 +13,57 @@ var ruleTextValue = document.getElementById('ruleNameTxt');
 var ruleTextRadBtn = document.getElementById('newRuleRadBtn');
 
 var linkform = document.getElementById('linkFormEdit');
+var changeCatCheck = document.getElementById('changeCatName');
+var categoryEditTxt = document.getElementById('categoryEditTxt');
+var changeRuleCheck = document.getElementById('changeRuleName');
+var ruleEditTxt = document.getElementById('ruleEditTxt');
 
 // determines how to load the XML file based on browser version.
 function loadXMLDoc(dname){
 	if (window.XMLHttpRequest){	xhttp=new XMLHttpRequest();	} // code for IE7+, Firefox, Chrome, Opera, Safari
-	else{	xhttp=new ActiveXObject("Microsoft.XMLHTTP");	} // code for IE6, IE5
+	else{ xhttp=new ActiveXObject("Microsoft.XMLHTTP"); } // code for IE6, IE5
 	xhttp.open("GET",dname,false);
 	xhttp.send("");
 	return xhttp.responseXML;
 }
 
+function pageStart(){
+	newCatRad.checked=true;
+	selectNewCategory();
+}
 // Retrieves categories from xml, empties the categories drop
 // down and update it with the retrieved categories. 
 function updateCategory(){
+	show('catDiv');
 	var categoryName=xml.getElementsByTagName("category");
 	cat.disabled=false;
 	catNameText.disabled=true;
-	while ( cat.firstChild ) cat.removeChild( cat.firstChild );
 	
+	changeCatCheck.disabled=false;
+	categoryEditTxt.disabled=false;
+	
+	while ( cat.firstChild ) cat.removeChild( cat.firstChild );	
 	for(i=0;i<categoryName.length;i++) {
 		var newOption = document.createElement('option');
 		newOption.innerHTML = categoryName[i].getAttribute('name');
 		cat.appendChild(newOption);
 	}
 	deleteCat.disabled=false;
-	updateRule();
-	ruleListRadBtn.checked=true;
+	ruleListRadBtn.checked=true;	
+	updateRule();	
 }
 
 // Retrieves rules from xml, within the selected category
 // updates the rules drop down and update it with the retrieved rules. 
 function updateRule(){
+	show('ruleDiv');
 	var ruleName=xml.getElementsByTagName("rule");
 	var selectedCat = cat.options[cat.selectedIndex].text;
 	rule.disabled=false;
 	ruleTextValue.disabled=true;	
+	
+	changeRuleCheck.disabled=false;
+	ruleEditTxt.disabled=false;	
 	
 	while ( rule.firstChild ) rule.removeChild( rule.firstChild );	
 	var j=0;
@@ -73,6 +89,21 @@ function updateRule(){
 	}
 }
 
+function hide(id){
+	if (document.getElementById){
+		obj = document.getElementById(id); 
+		if (obj.style.display == ""){ obj.style.display = "none"; }
+	}
+}
+
+function show(id){
+	if (document.getElementById){
+		obj = document.getElementById(id); 
+		if (obj.style.display == "none"){ obj.style.display = ""; }
+	}
+}
+
+
 // Retrieves links from xml, within the selected rule
 // and creates new elements to display the links. 
 function updateLinks(){
@@ -83,10 +114,9 @@ function updateLinks(){
 	for(i=0;i<linkName.length;i++) {
 		if(linkName[i].parentNode.getAttribute('name') == selectedRule) {
 			var newOption = document.createElement('div');
-			newOption.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><br/>'+
+			newOption.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><i> - delete link</i><br/>'+
 					'<b>Link Text:</b> <input class="urlTextTxt" type="text" value="'+ linkName[i].firstChild.nodeValue +'"><br/>' +
-					'<b>Link URL:</b> <input class="urlTxt" type="text" value="'+ linkName[i].getAttribute('url') +'">' +
-					'<button type="button" onclick="addRuleSpace()">Delete Rule</button><br>';
+					'<b>Link URL:</b> <input class="urlTxt" type="text" value="'+ linkName[i].getAttribute('url') +'"><br>';
 			linkform.appendChild(newOption);
 		}
 	}
@@ -102,6 +132,11 @@ function selectNewCategory(){
 	var newOption = document.createElement('option');
 	newOption.innerHTML = 'Choose a category';
 	cat.appendChild(newOption);	
+	changeCatCheck.disabled=true;
+	changeCatCheck.checked=false;
+	categoryEditTxt.disabled=true;
+	categoryEditTxt.value = "";
+	hide('catDiv');
 	selectNewrule();
 }
 
@@ -112,16 +147,22 @@ function selectNewrule(){
 	ruleTextRadBtn.checked=true;
 	rule.disabled=true;
 	deleteRule.disabled=true;
+	
+	changeRuleCheck.checked=false;
+	changeRuleCheck.disabled=true;
+	ruleEditTxt.disabled=true;
+	ruleEditTxt.value = "";
+	hide('ruleDiv');
+	
 	while(linkform.firstChild) {	linkform.removeChild(linkform.firstChild);	}
 }
 
 //Adds an empty link space to allow the user to enter new links.
 function addLinkSpace(){
 	var newLink = document.createElement('div');
-	newLink.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><br/>'+
+	newLink.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><i> - delete link</i><br/>'+
 					'<b>Link Text:</b> <input class="urlTextTxt" type="text"><br/>' +
-					'<b>Link URL:</b> <input class="urlTxt" type="text">' +
-					'<button type="button" onclick="addRuleSpace()">Delete Rule</button><br>';
+					'<b>Link URL:</b> <input class="urlTxt" type="text"><br>';
 	linkform.appendChild(newLink);
 }
 
@@ -138,8 +179,7 @@ function commitValidation(){
 	var messageValue = "";
 	var messageContainer = document.createElement('div');
 	
-	var catValue;
-	var ruleValue;
+	var catValue, ruleValue, catEdit, ruleEdit;
 	var catOk = true;
 	var ruleOk = true;
 	var validationReady = false;
@@ -204,20 +244,24 @@ function commitValidation(){
 	messageContainer.innerHTML = messageValue;
 	message.appendChild(messageContainer);
 	var action = 'Commit';
-	if ( validationReady == true ) { javaFunction(catValue, ruleValue, linkTextArr, linkUrlArr, action); }	
+	if ( validationReady == true ) {
+		if((changeCatCheck.checked == true) && (categoryEditTxt.value != "")){	catEdit = categoryEditTxt.value; } 
+		if((changeRuleCheck.checked == true) && (ruleEditTxt.value != "")){	ruleEdit = ruleEditTxt.value; } 
+		javaFunction(catValue, ruleValue, linkTextArr, linkUrlArr, catEdit, ruleEdit, action);
+	}	
 }
 
 function removeCategory(){
 	var action = "removeCat";
-	var ruleValue, linkTextArr, linkUrlArr;
+	var ruleValue, linkTextArr, linkUrlArr, catNew, ruleNew;
 	var selectedCat = cat.options[cat.selectedIndex].text;
-	javaFunction(selectedCat, ruleValue, linkTextArr, linkUrlArr, action);
+	javaFunction(selectedCat, ruleValue, linkTextArr, linkUrlArr, catNew, ruleNew, action);
 }
 
 function removeRule(){
 	var action = "removeRule";
-	var linkTextArr, linkUrlArr;
+	var linkTextArr, linkUrlArr, catNew, ruleNew;
 	var catValue = cat.options[cat.selectedIndex].text;
 	var selectedRule = rule.options[rule.selectedIndex].text;
-	javaFunction(catValue, selectedRule, linkTextArr, linkUrlArr, action);
+	javaFunction(catValue, selectedRule, linkTextArr, linkUrlArr, catNew, ruleNew, action);
 }

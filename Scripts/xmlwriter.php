@@ -8,8 +8,10 @@
 		$rule	    = $_GET[rule];
 		$linkText	= $_GET[linkText];
 		$linkUrls   = $_GET[linkUrls];
+		$catEdit    = $_GET[catEdit];
+		$ruleEdit   = $_GET[ruleEdit];
 		$actionType = $_GET[actionType];
-		$funcName($category,$rule,$linkText,$linkUrls,$actionType); 
+		$funcName($category,$rule,$linkText,$linkUrls, $catEdit, $ruleEdit, $actionType); 
 	} else if (isset($_POST[action])){
 		// Retrieve the POST parameters and executes the function
 		$funcName	= $_POST[action];
@@ -17,11 +19,13 @@
 		$rule       = $_POST[rule];
 		$linkText	= $_POST[linkText];
 		$linkUrls   = $_POST[linkUrls];
+		$catEdit    = $_POST[catEdit];
+		$ruleEdit   = $_POST[ruleEdit];
 		$actionType = $_POST[actionType];
-		$funcName($category,$rule,$linkText,$linkUrls,$actionType); 	  
+		$funcName($category,$rule,$linkText,$linkUrls, $catEdit, $ruleEdit, $actionType); 	  
 	}
 	 
-	function phpFunction($category,$rule,$v1,$v2,$actionType)
+	function phpFunction($category,$rule,$v1,$v2, $catEdit, $ruleEdit, $actionType)
 	{
 		$file = "App_Data/items.xml";
 		$fp = fopen($file, "rb") or die("cannot open file");
@@ -46,16 +50,16 @@
 		$cats = $doc -> getElementsByTagName( "category" );
 		$rules = $doc -> getElementsByTagName( "rule" );
 		
+		// Delete category and all it's children
 		if("$actionType" == 'removeCat'){
 			foreach( $cats as $cat )
 			{
 				$catName = $cat->getAttribute('name');
-				if($catName == "$category"){
-					$cat -> parentNode -> removeChild($cat);
-				}
+				if($catName == "$category"){ $cat->parentNode->removeChild($cat); }
 			}
 		}
 		
+		// Delete a rule and all it's children
 		if("$actionType" == 'removeRule'){			
 			foreach( $cats as $cat )
 			{				
@@ -102,6 +106,8 @@
 									$ruleItem->appendChild($linkElement);
 								}							
 							}
+							if ($ruleEdit != "undefined"){ $ruleItem->setAttribute("name",ucfirst($ruleEdit)); }
+							if ($catEdit != "undefined"){ $cat->setAttribute("name",ucfirst($catEdit)); }
 							$cat->appendChild($ruleItem);
 							$root->appendChild($cat);
 							break 2;
@@ -110,10 +116,7 @@
 					//Activated when the selected category is already in the xml, but the rule is a new rule.
 					//Add a new rule to an existing category, even if the rule has no links.
 					if($updated == false)
-					{
-						echo "$rule not found\n";
-						$updated = true;
-						
+					{									
 						$ruleItem = $doc->createElement( "rule" );
 						$ruleItem->setAttribute("name",ucfirst($rule));		
 						
@@ -128,7 +131,7 @@
 						}
 						$cat->appendChild($ruleItem);
 						$root->appendChild($cat);
-						echo 'Rule "$rule" has been updated\n';
+						$updated = true;
 						break;
 					}				
 				}
@@ -157,5 +160,5 @@
 			}
 		}
 		$doc->save("App_Data/items.xml"); // save the xml to file.
-	}	
+	}
 ?>

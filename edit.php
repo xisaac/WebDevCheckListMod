@@ -10,18 +10,18 @@
 		
 		<!-- Javascript function, which parses javascript variables to xmlwriter.php -->
 		<SCRIPT language="javascript">
-		function javaFunction(category, rule, linkText, linkUrls, actionType){	
+		function javaFunction(category, rule, linkText, linkUrls, catEdit, ruleEdit, actionType){
 			// the url which you have to reload is this page, but you add an action to the GET- or POST-variable
 			var url="<?php echo $_SERVER['PHP_SELF'];?>?action=phpFunction&category="+category+"&rule="
-			+rule+"&linkText="+linkText+'&linkUrls='+linkUrls+'&actionType='+actionType;		
+			+rule+"&linkText="+linkText+'&linkUrls='+linkUrls+'&catEdit='+catEdit+'&ruleEdit='+ruleEdit+'&actionType='+actionType;
 			// Opens the url in the same window
 			window.open(url, "_self");
 		}
-		</SCRIPT>  
+		</SCRIPT>
 		<?php include('scripts/sort.php'); ?>
 	</head>
 	
-	<body>
+	<body onload="pageStart()">
 		<?php include('snippets/menubar.php'); ?>
 		<div id="main">
 		
@@ -32,12 +32,24 @@
 						<h2>Step 1 - </h2> <h3>Select category.</h3>
 						<form>								
 							<input type="radio" id="CatTextRadBtn" name="categoryDropDown" onclick="selectNewCategory()">
-								<b>Add a new category name:</b> <input type="text" id="categoryNameTxt"><br/>
+								<label for="CatTextRadBtn">
+									<b>Add a new category name:</b><input type="text" id="categoryNameTxt">
+								</label><br/>
+								
 							<input type="radio" id="catListRadBtn" name="categoryDropDown" onclick="updateCategory()">
-								<b>Use Existing Category: &nbsp &nbsp &nbsp </b>
+							<label for="catListRadBtn">
+								<b>Use Existing Category: &nbsp &nbsp &nbsp </b>									
+							</label>
 							<select id="categories" onchange='updateRule();'>
 								<option>Choose a category</option>
 							</select><br/>
+							
+							<div style="display: none;" id="catDiv">
+							<input type="checkbox" id="changeCatName" />
+							<label for="changeCatName">Change Category name to: </label>
+							<input type="text" id="categoryEditTxt"><br/>
+							</div>
+							
 							<button type="button" onclick="removeCategory()" id="deleteCategory">Delete Selected Category</button>
 						</form>
 					</td>
@@ -53,7 +65,14 @@
 								<b>Use Existing Rule: </b>
 								<select id="rules" onchange='updateLinks();' >
 									<option>Choose a category</option>
-								</select><br/> 
+								</select><br/>
+								
+								<div style="display: none;" id="ruleDiv">
+									<input type="checkbox" id="changeRuleName" />
+									<label for="changeRuleName">Change Rule name to: </label>
+									<input type="text" id="ruleEditTxt"><br/>
+								</div>
+							
 								<button type="button" onclick="removeRule()" id="deleteRule">Delete Selected Rule</button>
 							</span>
 						</form>
@@ -65,10 +84,6 @@
 						<button type="button" onclick="addLinkSpace()">Add New Link</button>
 						<button type="button" id="commitbtn" onclick="commitValidation()">Commit Changes</button>
 						<form  id="linkForm">
-						<!--
-							<b>Link Text:</b> <input class="urlTextTxt" type="text"><br/>
-							<b>Link URL:</b> <input class="urlTxt" type="text">
-						-->
 							<div id="linkFormEdit">
 							</div>							
 						</form>
