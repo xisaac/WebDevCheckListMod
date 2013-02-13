@@ -89,6 +89,8 @@ ul {
     transform: translate(0, -2px);
     margin-left: .6em;
     cursor: pointer;
+	vertical-align: baseline;
+	line-height: normal;
 }
 
     .info + ul li:first-child {
@@ -112,9 +114,10 @@ footer {
     footer a {
         display: inline-block;
         position: fixed;
-        bottom: 1.5em;
+        bottom: 2.5em;
         right: 1em;
         background: white;
+		font-size: 1.2em;
     }
 
 #bonus {
@@ -212,4 +215,12 @@ footer progress::-moz-progress-bar {
     h2{
         font-size: 1.2em;
     }
+}
+
+.customlabel{
+	font-size: 1.3em;
+}
+
+.linktext{
+	font-size: 1.1em;
 }

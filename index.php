@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
 	<head>
-		<?php header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0'); ?>
+		<?php header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0'); //prevent page caching. ?>
 		<meta charset="utf-8" />		
-		<meta name="keywords" content="checklist, best practices, web development, performance, usability, mobile, website" />
-		<meta name="description" content="The ultimate checklist for all serious web developers building modern websites" />
-		<meta name="author" content="Sayed Hashimi @sayedihashimi, Mads Kristensen @mkristensen" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
-		
 		<link rel="stylesheet" type="text/css" media="all" href="content/site.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="content/normalize.css" />
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-		
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />		
 		<script src="Scripts/modernizr-2.6.2.js"></script>
 		<script src="Scripts/script.js"></script>
 		<script src="scripts/script.min.js" async="async"></script>		
@@ -47,6 +41,7 @@
 
 	</body>
 	<HEAD>
+	<!-- Help prevent caching -->
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="-1">
 	</HEAD>

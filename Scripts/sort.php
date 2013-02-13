@@ -1,4 +1,8 @@
 <?php
+	/*
+		Uses the sort.xsl file as a template for re-arranging the data in the items.xml file. 
+		The data in the XML file is then used to construct the home page.
+	*/
 	// Load the XML and XSLT source					
 	$xml = new DOMDocument;
 	$xml->load('App_Data/items.xml');					

@@ -12,27 +12,19 @@
 	vertical-align: top;
 }
 
-#pagelayout [type="text"]{
-	background-color: #5f8db6;
- 	-moz-border-radius: 15px; /* mozilla */
-	border-radius: 15px; /* css 3 */
-    border:solid 1px black; 
-    padding:5px;
-	vertical-align: middle;
-	height: 8px;
-	font-weight: bold;
-}
-
 h3 {
 	text-decoration:underline;
 	font-style: italic;
 }
 
-#urlTxt{
-	width:80%;
+#message{
+	width: 90%;
+	margin-left:auto;
+    margin-right:auto;
 }
-#urlTextTxt{
-	width: 40%;
+
+#helpbtn{
+	margin-left: 5%;
 }
 
 #btnDispose{
@@ -57,4 +49,25 @@ h3 {
 
 #linkForm div input{
 	width: 80%;
+}
+.modal {
+  height: 60%;
+
+  .modal-body {
+    height: 80%;
+    overflow-y: auto;
+  }
+}
+
+#myModal{
+	background-color: #b34444;
+}
+
+#myModal button{
+	float: right;
+	margin-right: 7%;
+}
+
+#modebody{
+	background-color: white;
 }

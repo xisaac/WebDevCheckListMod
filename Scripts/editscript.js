@@ -89,6 +89,8 @@ function updateRule(){
 	}
 }
 
+//Hides html element with the ID passed as a parameter.
+//for the category and rule editing elements.
 function hide(id){
 	if (document.getElementById){
 		obj = document.getElementById(id); 
@@ -96,13 +98,14 @@ function hide(id){
 	}
 }
 
+//Shows html element with the ID passed as a parameter.
+//for the category and rule editing elements.
 function show(id){
 	if (document.getElementById){
 		obj = document.getElementById(id); 
 		if (obj.style.display == "none"){ obj.style.display = ""; }
 	}
 }
-
 
 // Retrieves links from xml, within the selected rule
 // and creates new elements to display the links. 
@@ -114,9 +117,10 @@ function updateLinks(){
 	for(i=0;i<linkName.length;i++) {
 		if(linkName[i].parentNode.getAttribute('name') == selectedRule) {
 			var newOption = document.createElement('div');
-			newOption.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><i> - delete link</i><br/>'+
-					'<b>Link Text:</b> <input class="urlTextTxt" type="text" value="'+ linkName[i].firstChild.nodeValue +'"><br/>' +
-					'<b>Link URL:</b> <input class="urlTxt" type="text" value="'+ linkName[i].getAttribute('url') +'"><br>';
+			newOption.innerHTML = '<button id="btnDispose" class="btn btn-danger" type="button" onclick="unlistLink(this)">' +
+					'<i class="icon-trash icon-white"></i></button><br/>'+
+					'Link Text: <input class="search-query urlTextTxt" type="text" value="'+ linkName[i].firstChild.nodeValue +'"><br/>' +
+					'Link URL: <input class="search-query urlTxt" type="text" value="'+ linkName[i].getAttribute('url') +'"><br>';
 			linkform.appendChild(newOption);
 		}
 	}
@@ -143,7 +147,7 @@ function selectNewCategory(){
 // selects the new rule radio button, enables the new rule text field
 // and removes all the displayed links, if there are any.
 function selectNewrule(){
-	ruleTextValue.disabled=false;	
+	ruleTextValue.disabled=false;
 	ruleTextRadBtn.checked=true;
 	rule.disabled=true;
 	deleteRule.disabled=true;
@@ -160,9 +164,10 @@ function selectNewrule(){
 //Adds an empty link space to allow the user to enter new links.
 function addLinkSpace(){
 	var newLink = document.createElement('div');
-	newLink.innerHTML = '<button id="btnDispose" type="button" onclick="unlistLink(this)"><b>X</b></button><i> - delete link</i><br/>'+
-					'<b>Link Text:</b> <input class="urlTextTxt" type="text"><br/>' +
-					'<b>Link URL:</b> <input class="urlTxt" type="text"><br>';
+	newLink.innerHTML = '<button id="btnDispose" class="btn btn-danger" type="button" onclick="unlistLink(this)">' +
+					'<i class="icon-trash icon-white"></i></button><br/>' +
+					'Link Text: <input class="search-query urlTextTxt" type="text"><br/>' +
+					'Link URL: <input class="search-query urlTxt" type="text"><br>';
 	linkform.appendChild(newLink);
 }
 
@@ -215,8 +220,6 @@ function commitValidation(){
 	}
 	
 	// Validates the links and if it passes validation, all appropriate values are written to XML.
-	var j = 0;
-	
 	var linkTextArr = [];
 	var	linkUrlArr = [];
 	for (var i = 0; i < linkText.length; i++){
@@ -225,24 +228,13 @@ function commitValidation(){
 	}
 	
 	if((catOk == true) && (ruleOk == true)) { validationReady = true;}
+	if (messageValue != ""){
+		messageContainer.innerHTML = '<div class="alert alert-error">' +
+								'<strong>Error!</strong><br/>' + messageValue + '</div>';
+		message.appendChild(messageContainer);	
+	}
 	
-	for (var i = 0; i < linkText.length; i++){
-		
-		if ((linkText[i].value != "") && (linkUrl[i].value != "")){
-			j++;
-			if (j == 1){
-				messageValue += 'Category is - ' + catValue + "<br />" + 'Rule is - ' + ruleValue + "<br />";
-			}
-			if((catOk == true) && (ruleOk == true)){
-				catOk = false;
-				ruleOk = false;
-			}
-			messageValue += linkText[i].value + "<br />" + linkUrl[i].value + "<br />";
-		}
-	}	
-	
-	messageContainer.innerHTML = messageValue;
-	message.appendChild(messageContainer);
+	//Commits changes if all necessary validations have been passed
 	var action = 'Commit';
 	if ( validationReady == true ) {
 		if((changeCatCheck.checked == true) && (categoryEditTxt.value != "")){	catEdit = categoryEditTxt.value; } 
@@ -251,6 +243,7 @@ function commitValidation(){
 	}	
 }
 
+//passes variables to php function for deleting categories.
 function removeCategory(){
 	var action = "removeCat";
 	var ruleValue, linkTextArr, linkUrlArr, catNew, ruleNew;
@@ -258,6 +251,7 @@ function removeCategory(){
 	javaFunction(selectedCat, ruleValue, linkTextArr, linkUrlArr, catNew, ruleNew, action);
 }
 
+//passes variables to php function for deleting rules.
 function removeRule(){
 	var action = "removeRule";
 	var linkTextArr, linkUrlArr, catNew, ruleNew;

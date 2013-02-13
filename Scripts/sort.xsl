@@ -1,3 +1,4 @@
+<!-- Sorts the categories, rules and links stored in the XML each time the home or edit page is opened -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes"/>
   <xsl:strip-space elements="*"/>

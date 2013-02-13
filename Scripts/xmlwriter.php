@@ -1,4 +1,4 @@
-<?php 	
+	<?php 	
 	error_reporting(0);  // Turn off all error reporting
 	
 	if (isset($_GET[action])){
@@ -24,7 +24,9 @@
 		$actionType = $_POST[actionType];
 		$funcName($category,$rule,$linkText,$linkUrls, $catEdit, $ruleEdit, $actionType); 	  
 	}
-	 
+	
+	$successMessage;
+	
 	function phpFunction($category,$rule,$v1,$v2, $catEdit, $ruleEdit, $actionType)
 	{
 		$file = "App_Data/items.xml";
@@ -43,10 +45,9 @@
 		$doc->loadXML($str) or die("Error");
 		$root   = $doc->documentElement;
 		$ori    = $root->childNodes->item(0);
-		$updated = false;
-		$catIndex=0;
+		$updated = false;		
+		global $successMessage;
 		
-		//Edit existing data
 		$cats = $doc -> getElementsByTagName( "category" );
 		$rules = $doc -> getElementsByTagName( "rule" );
 		
@@ -59,7 +60,7 @@
 			}
 		}
 		
-		// Delete a rule and all it's children
+		// Delete selected rule and all it's children
 		if("$actionType" == 'removeRule'){			
 			foreach( $cats as $cat )
 			{				
@@ -85,15 +86,13 @@
 			{
 				$doc->appendChild( $root );
 				$catName = $cat->getAttribute('name');
-				$catIndex++;
 				if($catName == "$category")
 				{ //Add new links to an existing rule.
 					foreach($rules as $ruleItem)
 					{
 						$ruleName = $ruleItem->getAttribute('name');
 						if($ruleName == "$rule")
-						{
-							echo "Rule name $rule was found\n";
+						{							
 							$updated = true;
 							while( $ruleItem->firstChild ){	$ruleItem->removeChild($ruleItem->firstChild);  }
 							
@@ -160,5 +159,8 @@
 			}
 		}
 		$doc->save("App_Data/items.xml"); // save the xml to file.
+		$successMessage = '<div class="alert alert-success"> <a class="close" data-dismiss="alert">×</a>'.
+							'<strong>Success! - </strong> Checklist updated.</div>';
 	}
+	
 ?>
